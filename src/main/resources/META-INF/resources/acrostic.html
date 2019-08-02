@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>UI Kafka Consumer</title>
+    <title>Acrostic</title>
 
     <link rel="stylesheet" type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly.min.css">
@@ -12,17 +12,17 @@
 <body>
 <div class="container">
 
-    <h2>Last price</h2>
+    <h2>Reactive Acrostic Puzzle</h2>
     <div class="row">
-    <p class="col-md-12">The last message was <strong><span id="content">N/A</span>&nbsp;&euro;</strong>.</p>
+    <p class="col-md-12"><strong><span id="content">N/A</span></strong></p>
     </div>
 </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-    var source = new EventSource("/ui/stream");
+	var source = new EventSource("/ui-topic/stream");
     source.onmessage = function (event) {
-        document.getElementById("content").innerHTML = event.data;
+		document.getElementById("content").innerHTML = atob(event.data);  
     };
 </script>
 </html>

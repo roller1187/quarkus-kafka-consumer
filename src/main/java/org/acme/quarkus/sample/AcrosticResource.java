@@ -12,23 +12,22 @@ import javax.ws.rs.core.MediaType;
 /**
  * A simple resource retrieving the "in-memory" "my-data-stream" and sending the items to a server sent event.
  */
-@Path("/ui")
-public class PriceResource {
+@Path("/ui-topic")
+public class AcrosticResource {
 
     @Inject
-    @Stream("ui") Publisher<String> messages;
+    @Stream("data-stream") Publisher<String> message;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
         return "hello";
     }
-
-
+    
     @GET
     @Path("/stream")
     @Produces(MediaType.SERVER_SENT_EVENTS)
     public Publisher<String> stream() {
-        return messages;
+        return message;
     }
 }

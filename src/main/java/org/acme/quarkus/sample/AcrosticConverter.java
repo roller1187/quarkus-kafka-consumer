@@ -11,15 +11,13 @@ import javax.enterprise.context.ApplicationScoped;
  * The result is pushed to the "my-data-stream" stream which is an in-memory stream.
  */
 @ApplicationScoped
-public class PriceConverter {
+public class AcrosticConverter {
 
-//    private static final double CONVERSION_RATE = 0.88;
-
-    @Incoming("ui-topic")
-    @Outgoing("ui")
+	@Incoming("ui-topic")
+    @Outgoing("data-stream")
     @Broadcast
     public String process(String acrosticMessage) {
-    	return "HELLO - " + acrosticMessage;
+    	return acrosticMessage;
     }
 
 }
