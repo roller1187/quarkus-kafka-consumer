@@ -1,4 +1,4 @@
-<img src="https://developers.redhat.com/blog/wp-content/uploads/2018/10/Untitled-drawing-4.png" data-canonical-src="https://developers.redhat.com/blog/wp-content/uploads/2018/10/Untitled-drawing-4.png" width="300" height="140" /> <img src="https://quarkus.io/assets/images/quarkus_logo_horizontal_rgb_reverse.svg data-canonical-src="" width="300" height="140" />
+<img src="https://developers.redhat.com/blog/wp-content/uploads/2018/10/Untitled-drawing-4.png" data-canonical-src="https://developers.redhat.com/blog/wp-content/uploads/2018/10/Untitled-drawing-4.png" width="300" height="140" /> <img src="https://quarkus.io/assets/images/quarkus_logo_horizontal_rgb_reverse.svg" data-canonical-src="https://quarkus.io/assets/images/quarkus_logo_horizontal_rgb_reverse.svg" width="300" height="140" />
 
 # Quarkus Kafka Consumer
 
