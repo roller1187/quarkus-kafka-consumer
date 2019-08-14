@@ -27,6 +27,10 @@ oc new-app --name quarkus-kafka-consumer \
     --env=JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0" \
     https://github.com/roller1187/quarkus-kafka-consumer.git
 ```
+  4. Create a route:
+```sh
+oc expose svc/quarkus-kafka-consumer
+```
 
 *Acrostic example:
 
