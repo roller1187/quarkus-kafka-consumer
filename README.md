@@ -31,7 +31,8 @@ oc new-app --name quarkus-kafka-consumer \
 ```sh
 oc expose svc/quarkus-kafka-consumer
 ```
-  5. Navigate to the route for the Quarkus UI and add "/acrostic.html" at the end. The output should look like this:
+  5. Navigate to the route for the Quarkus UI and add **"/acrostic.html"** at the end. The output should look like this:
+  
 ![Quarkus Demo](https://github.com/roller1187/quarkus-kafka-consumer/blob/master/.screens/quarkus_demo.gif)
 
 *Acrostic example:
