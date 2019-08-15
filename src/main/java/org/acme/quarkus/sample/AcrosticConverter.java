@@ -6,9 +6,12 @@ import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import io.smallrye.reactive.messaging.annotations.Broadcast;
@@ -20,6 +23,8 @@ import io.smallrye.reactive.messaging.annotations.Broadcast;
 @ApplicationScoped
 public class AcrosticConverter {
 
+	public static Logger logger = LoggerFactory.getLogger(AcrosticConverter.class);
+	
 	@Incoming("ui-topic")
     @Outgoing("data-stream")
     @Broadcast
@@ -27,14 +32,29 @@ public class AcrosticConverter {
 		byte[] decodedAcrosticBytes = Base64.getDecoder().decode(acrosticMessage);
 		String decodedAcrosticJSON = new String(decodedAcrosticBytes);
 		
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		String prettyJSONString = gson.toJson(new JsonParser().parse(decodedAcrosticJSON));
-		String htmlJSONString;
+		String htmlOutput = "";
+		JsonElement jelement = new JsonParser().parse(decodedAcrosticJSON);
+		JsonObject  jobject = jelement.getAsJsonObject();
 		
-		htmlJSONString = prettyJSONString.replaceAll(" ", "&nbsp;");
-		htmlJSONString = htmlJSONString.replaceAll("(\r\n|\n)", "<br />");
+		logger.info("Received new message: " + jobject.get("message").toString());
+		htmlOutput += "<div><h3>Message:&nbsp<b>" + jobject.get("message").toString() + "</b></h3></div>";
 		
-		return htmlJSONString;
+		JsonArray jarray = jobject.getAsJsonArray("acrostic");
+		htmlOutput += "<div><h3>Acrostic:</h3>";
+		htmlOutput += "<div><table style='width: 50%; text-align: center' border='1pt'>"
+					+ "<tr><th style='text-align: center'><h3>Letter</h3>" 
+					+ "</th><th style='text-align: center'><h3>Word</h3></th></tr>";
+
+		for (int i=0; i<jarray.size(); i++) {
+			jobject = jarray.get(i).getAsJsonObject();
+			htmlOutput += "<tr><td>" + jobject.get("letter").toString() + "</td><td>" +
+							jobject.get("word").toString() + "</td></tr>";
+			logger.info(jobject.get("letter").toString() + " -> " + jobject.get("word").toString());
+			
+		}
+		htmlOutput += "</table></div></div>";
+
+		return htmlOutput.replaceAll("\"", "");
     }
 
 }
