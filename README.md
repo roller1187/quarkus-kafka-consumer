@@ -17,7 +17,7 @@ oc login <openshift_cluster>
 ```
   2. Use existing Kafka project created during the deployment of the [kafka-consumer](https://github.com/roller1187/kafka-consumer) service:
 ```sh
-oc new-project kafka-$(oc whoami)
+oc project kafka-$(oc whoami)
 ```
   3. Deploy the service using s2i (Source-2-Image). Don't forget to provide a Kafka topic:
 ```sh
