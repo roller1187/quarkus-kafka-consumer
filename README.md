@@ -22,7 +22,7 @@ oc project kafka-$(oc whoami)
   3. Deploy the service using s2i (Source-2-Image). Don't forget to provide a Kafka topic:
 ```sh
 oc new-app --name quarkus-kafka-consumer \
-    --image-stream openjdk-11-rhel8 \
+    --image-stream openjdk-11-rhel8:1.0 \
     --build-env=ARTIFACT_COPY_ARGS="-p -r lib/ *-runner.jar" \
     --env=JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0" \
     https://github.com/roller1187/quarkus-kafka-consumer.git
