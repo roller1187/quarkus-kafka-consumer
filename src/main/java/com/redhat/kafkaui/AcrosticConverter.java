@@ -38,9 +38,7 @@ public class AcrosticConverter {
 	@ConfigProperty(name = "mp.messaging.incoming.ui-topic.ssl.truststore.password") String kafkaTrustStorePassword;
 	
 	@Initialized(ApplicationScoped.class)
-	void onStart(@Observes StartupEvent event, AcrosticConverter bean) throws GeneralSecurityException, IOException { 
-//		bean.toString();
-		logger.info("onStart , event=" + event);
+	void onStart(@Observes StartupEvent event) throws GeneralSecurityException, IOException { 
 		TrustStore.createFromCrtFile(kafkaCertPath,
 									 kafkaTrustStoreLocation,
 									 kafkaTrustStorePassword.toCharArray());
