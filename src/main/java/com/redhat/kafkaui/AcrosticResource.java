@@ -1,4 +1,4 @@
-package org.acme.quarkus.sample;
+package com.redhat.kafkaui;
 
 import io.smallrye.reactive.messaging.annotations.Stream;
 import org.reactivestreams.Publisher;

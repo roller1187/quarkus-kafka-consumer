@@ -1,9 +1,15 @@
-package org.acme.quarkus.sample;
+package com.redhat.kafkaui;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Base64;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.context.Initialized;
+import javax.enterprise.event.Observes;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.slf4j.Logger;
@@ -14,16 +20,31 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import io.quarkus.runtime.StartupEvent;
 import io.smallrye.reactive.messaging.annotations.Broadcast;
 
 /**
  * A bean consuming data from the "ui-topic" Kafka topic and applying some conversion.
  * The result is pushed to the "my-data-stream" stream which is an in-memory stream.
  */
-@ApplicationScoped
+
+@Dependent
 public class AcrosticConverter {
 
 	public static Logger logger = LoggerFactory.getLogger(AcrosticConverter.class);
+    
+	@ConfigProperty(name = "kafka.cert.path") String kafkaCertPath;
+	@ConfigProperty(name = "mp.messaging.incoming.ui-topic.ssl.truststore.location") String kafkaTrustStoreLocation;
+	@ConfigProperty(name = "mp.messaging.incoming.ui-topic.ssl.truststore.password") String kafkaTrustStorePassword;
+	
+	@Initialized(ApplicationScoped.class)
+	void onStart(@Observes StartupEvent event, AcrosticConverter bean) throws GeneralSecurityException, IOException { 
+//		bean.toString();
+		logger.info("onStart , event=" + event);
+		TrustStore.createFromCrtFile(kafkaCertPath,
+									 kafkaTrustStoreLocation,
+									 kafkaTrustStorePassword.toCharArray());
+	}
 	
 	@Incoming("ui-topic")
     @Outgoing("data-stream")
