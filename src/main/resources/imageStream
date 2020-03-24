@@ -1,0 +1,35 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/display-name: Red Hat OpenJDK 11
+    openshift.io/image.dockerRepositoryCheck: '2020-03-24T03:48:04Z'
+    openshift.io/provider-display-name: 'Red Hat, Inc.'
+    samples.operator.openshift.io/version: 4.2.20
+    version: 1.4.17
+  name: openjdk-11-rhel8
+  generation: 2
+  namespace: openshift
+  labels:
+    samples.operator.openshift.io/managed: 'true'
+spec:
+  lookupPolicy:
+    local: true
+  tags:
+    - name: '1.0'
+      annotations:
+        description: Build and run Java applications using Maven and OpenJDK 11.
+        iconClass: icon-rh-openjdk
+        openshift.io/display-name: Red Hat OpenJDK 11
+        sampleContextDir: undertow-servlet
+        sampleRepo: 'https://github.com/jboss-openshift/openshift-quickstarts'
+        supports: 'java:11'
+        tags: 'builder,java,openjdk,hidden'
+        version: '1.0'
+      from:
+        kind: DockerImage
+        name: 'registry.redhat.io/openjdk/openjdk-11-rhel8:1.0'
+      generation: 2
+      importPolicy: {}
+      referencePolicy:
+        type: Local
