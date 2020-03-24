@@ -19,19 +19,24 @@ oc login <openshift_cluster>
 ```sh
 oc project kafka-$(oc whoami)
 ```
-  3. Deploy the service using s2i (Source-2-Image). Don't forget to provide a Kafka topic:
+  3. Deploy the service using s2i (Source-2-Image). Don't forget to provide a Kafka topic. In case openjdk-11-rhel8:1.0 imageStream is missing, src/main/resources/imageStream can be used as a template:
 ```sh
 oc new-app --name quarkus-kafka-consumer \
     --image-stream openjdk-11-rhel8:1.0 \
     --build-env=ARTIFACT_COPY_ARGS="-p -r lib/ *-runner.jar" \
     --env=JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0" \
+    --env=KAFKA_BOOTSTRAP_SERVERS=my-cluster-kafka-bootstrap-kafka-demo.apps.postal.redhatgov.io:443 \
     https://github.com/roller1187/quarkus-kafka-consumer.git
 ```
-  4. Create a route:
+  4. Add ConfigMap to Quarkus Consumer
+```sh
+oc set volume dc/quarkus-kafka-consumer --add --type=configmap --configmap-name=kafka-cert --mount-path=/tmp/certs
+```
+  5. Create a route:
 ```sh
 oc expose svc/quarkus-kafka-consumer
 ```
-  5. Navigate to the route for the Quarkus UI and append **"/acrostic.html"** to the URL. The output should look like this:
+  6. Navigate to the route for the Quarkus UI and append **"/acrostic.html"** to the URL. The output should look like this:
   
 ![Quarkus Demo](https://github.com/roller1187/quarkus-kafka-consumer/blob/master/.screens/quarkus_demo.gif)
 
