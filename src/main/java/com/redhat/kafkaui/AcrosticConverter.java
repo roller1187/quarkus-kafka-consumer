@@ -28,23 +28,23 @@ import io.smallrye.reactive.messaging.annotations.Broadcast;
  * The result is pushed to the "my-data-stream" stream which is an in-memory stream.
  */
 
-@Dependent
+// @Dependent
 public class AcrosticConverter {
 
-	public static Logger logger = LoggerFactory.getLogger(AcrosticConverter.class);
+    public static Logger logger = LoggerFactory.getLogger(AcrosticConverter.class);
     
-	@ConfigProperty(name = "kafka.cert.path") String kafkaCertPath;
-	@ConfigProperty(name = "mp.messaging.incoming.ui-topic.ssl.truststore.location") String kafkaTrustStoreLocation;
-	@ConfigProperty(name = "mp.messaging.incoming.ui-topic.ssl.truststore.password") String kafkaTrustStorePassword;
+// 	@ConfigProperty(name = "kafka.cert.path") String kafkaCertPath;
+// 	@ConfigProperty(name = "mp.messaging.incoming.ui-topic.ssl.truststore.location") String kafkaTrustStoreLocation;
+// 	@ConfigProperty(name = "mp.messaging.incoming.ui-topic.ssl.truststore.password") String kafkaTrustStorePassword;
 	
-	@Initialized(ApplicationScoped.class)
-	void onStart(@Observes StartupEvent event) throws GeneralSecurityException, IOException { 
-		TrustStore.createFromCrtFile(kafkaCertPath,
-									 kafkaTrustStoreLocation,
-									 kafkaTrustStorePassword.toCharArray());
-	}
+// 	@Initialized(ApplicationScoped.class)
+// 	void onStart(@Observes StartupEvent event) throws GeneralSecurityException, IOException { 
+// 		TrustStore.createFromCrtFile(kafkaCertPath,
+// 									 kafkaTrustStoreLocation,
+// 									 kafkaTrustStorePassword.toCharArray());
+// 	}
 	
-	@Incoming("ui-topic")
+    @Incoming("ui-topic")
     @Outgoing("data-stream")
     @Broadcast
     public String process(String acrosticMessage) {
