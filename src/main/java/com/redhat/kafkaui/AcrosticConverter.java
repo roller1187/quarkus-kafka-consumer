@@ -29,6 +29,7 @@ import io.smallrye.reactive.messaging.annotations.Broadcast;
  */
 
 // @Dependent
+@ApplicationScoped
 public class AcrosticConverter {
 
     public static Logger logger = LoggerFactory.getLogger(AcrosticConverter.class);
