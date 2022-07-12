@@ -62,7 +62,7 @@ public class AcrosticConverter {
 		JsonArray jarray = jobject.getAsJsonArray("acrostic");
 		htmlOutput += "<div><h3>Acrostic:</h3>";
 		htmlOutput += "<div><table style='width: 50%; text-align: center' border='1pt'>"
-					+ "<tr><th style='text-align: center'><h3>Letter</h3>" 
+					+ "<tr><th style='text-align: center'><h3>LETTER</h3>" 
 					+ "</th><th style='text-align: center'><h3>Word</h3></th></tr>";
 
 		for (int i=0; i<jarray.size(); i++) {
